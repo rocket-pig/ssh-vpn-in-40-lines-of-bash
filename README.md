@@ -16,9 +16,13 @@ Your remote machine must be set up to forward packets.  If its a linux host, thi
 (Note that 'ens3' should be name of your server's public-facing network adapter)
 
 `echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward`
+
 `iptables -F FORWARD`
+
 `iptables -A FORWARD -j ACCEPT`
+
 `iptables -A POSTROUTING -t nat -o ens3 -j MASQUERADE`
+
 `iptables -A POSTROUTING -t nat -o ppp+ -j MASQUERADE`
 
 And that's it! The script also takes care of changing the default route, so all internet-related apps on local system will "just work".  No http/ssl/socks (4? 5? passwords? no?) /openvpn 12-page keys or weird handshakes to figure out. It's a 'normal' internet connection and you can get on with other shit, cheers
